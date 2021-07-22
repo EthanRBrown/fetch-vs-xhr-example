@@ -1,0 +1,36 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Fetch API Example</title>
+  </head>
+  <body>
+    <div>
+      <button id="fetch">Use Fetch</button>
+      <pre id="fetchResponse"></pre>
+    </div>
+    <div>
+      <button id="xhr">Use XMLHttpRequest</button>
+      <pre id="xhrResponse"></pre>
+    </div>
+    <script>
+      document.getElementById('fetch').addEventListener('click', () => {
+        // this uses the Fetch API
+        fetch('http://localhost:1234/')
+          .then(res => res.json())
+          .then(json => {
+            document.getElementById('fetchResponse').innerText = JSON.stringify(json, null, 2)
+          })
+      })
+      document.getElementById('xhr').addEventListener('click', () => {
+        // this uses XMLHttpRequest
+        const req = new XMLHttpRequest()
+        req.addEventListener('load', function() {
+          const json = JSON.parse(this.responseText)
+          document.getElementById('xhrResponse').innerText = JSON.stringify(json, null, 2)
+        })
+        req.open('GET', 'http://localhost:1234')
+        req.send()
+      })
+    </script>
+  </body>
+</html>
